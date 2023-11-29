@@ -1,9 +1,12 @@
-import { StyleSheet, View, Text, Image } from 'react-native';
+import React, { useRef } from 'react';
+import { StyleSheet, View, Text, Image, PanResponder, PanResponderGestureState, useWindowDimensions } from 'react-native';
 import Header from './Header';
 import Options from './Options';
 import { Data } from './interFace';
 
-export default function Panel({data}: {data: Data}) {  
+export default function Panel({data, handleDataChange}: {data: Data, handleDataChange: () => void}) {  
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+
   function splitTextByLength(text: string, maxLength: number): string[] {
     const words: string[] = text.split(' ');
     const result: string[] = [];
@@ -104,6 +107,24 @@ export default function Panel({data}: {data: Data}) {
     )
   }
 
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: () => true,
+      onMoveShouldSetPanResponder: () => true,
+      onPanResponderMove: (event, gestureState) => {
+        if (gestureState.dy < -10) {
+          console.log('向上手势');
+          handleDataChange();
+        } else if (gestureState.dy > 10) {
+          console.log('向下手势');
+          handleDataChange();
+        }
+      },
+      onPanResponderRelease: () => {
+      },
+    })
+  ).current;
+
   return (
     <>
       <View style={styles.header}>
@@ -136,6 +157,19 @@ export default function Panel({data}: {data: Data}) {
         {generateIcon()}
       </View>
       {generateBottomInfo()}
+      <View 
+        id="tetettetete"
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          right: 0,
+          zIndex: 0,
+          width: screenWidth, 
+          height: screenHeight
+        }} 
+        {...panResponder.panHandlers}
+      />
     </>
   );
 }

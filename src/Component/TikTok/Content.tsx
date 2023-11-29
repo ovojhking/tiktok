@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { StyleSheet, ImageBackground, View, useWindowDimensions, Text } from 'react-native';
 import Panel from './Panel';
 import { Data } from './interFace';
@@ -6,23 +6,33 @@ import { Data } from './interFace';
 export default function TikTokPage() {
   const [data, setData] = useState<Data | null>(null);
   const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+  const timerRef = useRef<any>(null);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('https://cross-platform.rp.devfactory.com/for_you');
+      
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const result: Data = await response.json();
+      setData(result);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  const handleDataChange = () => {
+    if(!timerRef.current) {
+      fetchData();
+      timerRef.current = setTimeout(() => { 
+        timerRef.current = null;
+      }, 500);
+    }
+  }
   
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://cross-platform.rp.devfactory.com/for_you');
-        
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-
-        const result: Data = await response.json();
-        setData(result);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
     fetchData();
   }, []);
 
@@ -31,7 +41,7 @@ export default function TikTokPage() {
   return (
     <View style={[styles.wrapper]}>
       <View style={{width: screenWidth, height: screenHeight, zIndex: 1}}>
-        <Panel data={data}/>
+        <Panel data={data} handleDataChange={handleDataChange} key={data.id}/>
       </View>
       <View style={styles.container}> 
           <ImageBackground
