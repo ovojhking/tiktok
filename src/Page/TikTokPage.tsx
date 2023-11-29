@@ -1,11 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native';
-import Header from '../Component/TikTok/Header';
+import Content from '../Component/TikTok/Content';
 
 export default function TikTokPage() {
   return (
     <View style={styles.container}>
-      <Header />
-      <Text style={styles.text}>TikTok</Text>
+      <Content />
     </View>
   );
 }
@@ -15,7 +14,4 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#000',
   },
-  text: {
-    color: 'yellow',
-  }
 });
