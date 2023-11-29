@@ -1,12 +1,11 @@
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import TikTokPage from './src/Page/TikTokPage';
+import Header from '../Component/TikTok/Header';
 
-export default function App() {
+export default function TikTokPage() {
   return (
     <View style={styles.container}>
-      <TikTokPage />
-      <StatusBar style="auto" />
+      <Header />
+      <Text style={styles.text}>TikTok</Text>
     </View>
   );
 }
@@ -16,4 +15,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#000',
   },
+  text: {
+    color: 'yellow',
+  }
 });
