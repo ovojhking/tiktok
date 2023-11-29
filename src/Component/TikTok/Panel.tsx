@@ -80,6 +80,29 @@ export default function Panel({data}: {data: Data}) {
     );
   };
 
+  const generateBottomInfo = () => {
+    const splitText = data.description.split('#');
+    return (
+      <View style={[styles.bottomWrapper]} id='aadff'>
+        <View style={{paddingLeft: 16}}>
+          <Text style={{color: '#fff', fontSize: 15, fontWeight: '600', marginBottom: 6}}>{data.user.name}</Text>
+          <View style={[styles.descriptionWrapper]}>
+            <Text style={{color: '#fff', fontSize: 13, fontWeight: '400'}}>{splitText[0]}</Text>
+            <Text style={{color: '#fff', fontSize: 13, fontWeight: '700'}}>#{splitText[1]}</Text>
+          </View>
+        </View>
+        <View style={[styles.playlistWrapper]}>
+          <View style={[styles.playlistIcon]}>
+            <Image source={require('../../../assets/video_icon.png')} style={{width: 20, height: 20, resizeMode: 'contain', marginRight: 5}} />
+            <Text style={{color: '#fff', fontSize: 13, fontWeight: '700'}}>Playlist • {data.playlist}</Text>
+          </View>
+
+          <Image source={require('../../../assets/right_arrow.png')} style={{width: 16, height: 16, resizeMode: 'contain',}} />
+        </View>
+      </View>
+    )
+  }
+
   return (
     <>
       <View style={styles.header}>
@@ -110,6 +133,7 @@ export default function Panel({data}: {data: Data}) {
         </View>
         {generateIcon()}
       </View>
+      {generateBottomInfo()}
     </>
   );
 }
@@ -187,5 +211,33 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 'auto',
     paddingTop: 20,
-  }
+  },
+  bottomWrapper: {
+    position: 'absolute',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+    bottom: 0,
+    width: '100%',
+  },
+  descriptionWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  playlistWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 16,
+    width: '100%',
+    backgroundColor: '#161616',
+    marginTop: 16,
+  },
+  playlistIcon: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+
 });
