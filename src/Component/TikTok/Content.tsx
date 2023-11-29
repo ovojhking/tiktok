@@ -36,7 +36,7 @@ export default function TikTokPage() {
       <View style={styles.container}> 
           <ImageBackground
             source={{ uri: data.image }}
-            style={[styles.imageBackground, { width: screenWidth, height: screenHeight }]}
+            style={[styles.imageBackground, { width: screenWidth, height: screenHeight}]}
             resizeMode="cover"
           />
       </View>

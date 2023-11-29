@@ -1,5 +1,6 @@
 import { StyleSheet, View, Text, Image } from 'react-native';
 import Header from './Header';
+import Options from './Options';
 import { Data } from './interFace';
 
 export default function Panel({data}: {data: Data}) {  
@@ -120,6 +121,7 @@ export default function Panel({data}: {data: Data}) {
           </Text>
         ))}
       </View>
+      <Options data={data}/>
 
       <View style={[styles.sideBar]}>
         <View style={[styles.avatarWrapper]}>
@@ -239,5 +241,4 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
-
 });
